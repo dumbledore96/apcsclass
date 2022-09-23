@@ -9,9 +9,16 @@ bool year(int y)
     return 0;
 }
 
+bool need(int y,int m,int d)
+{
+	if(year(y) && m==2 && d<=29)return 0;
+	else if(d<=mon[m])return 0;
+	return 1;
+}
+
 int gcd(int a,int b)
 {
-    if(a==0)return b;
+    if(b==0)return a;
     return gcd(b,a%b);
 }
 
@@ -27,13 +34,28 @@ int main()
     }
     int lcm=a[n-1],y,m,d;
     //test
-    cout<<"lcm: "<<lcm<<endl;
+    //cout<<"lcm: "<<lcm<<endl;
 
-    //¿é¤J¤é´Á
     char c;
     cin>>y>>c>>m>>c>>d;
     d+=lcm;
 
     //main
-    bool
+    bool ans=need(y,m,d);
+    while(ans){
+		if(year(y) && m==2)d-=29;
+		else d-=mon[m];
+		m++;
+		if(m>12){
+			m-=12;
+			y++;
+		}
+		ans=need(y,m,d);
+    }
+    cout<<y<<'/';
+    if(m/10<1)cout<<0;
+    cout<<m<<'/';
+    if(d/10<1)cout<<0;
+    cout<<d<<endl;
+    return 0;
 }
